@@ -1,0 +1,41 @@
+
+
+import pygame
+from pygame.locals import *
+
+pygame.init()
+
+
+fenetre = pygame.display.set_mode((9197, 720))
+
+
+
+
+fond = pygame.image.load("SCROLL FRAI FINALE redim.png").convert()
+fenetre.blit(fond, (0,0))
+
+zombie = pygame.image.load("MRZBY REDIM FINAL.png").convert()
+position_zombie = zombie.get_rect()             #40,525
+fenetre.blit(zombie, position_zombie)
+
+leroux = pygame.image.load("LEROUX REDIM FINAL.png").convert()
+position_leroux = leroux.get_rect()
+fenetre.blit(leroux, position_leroux)         #170,527
+
+pygame.display.flip()
+
+continuer = 1
+while continuer:
+	for event in pygame.event.get():	#Attente des événements
+		if event.type == QUIT:
+			continuer = 0
+		if event.type == KEYDOWN:
+			if event.key == K_DOWN:	#Si "flèche bas"
+				#On descend le zombie
+				position_zombie = position_zombie.move(0,10)
+	
+	#Re-collage
+	fenetre.blit(fond, (0,0))	
+	fenetre.blit(zombie, position_zombie)
+	#Rafraichissement
+	pygame.display.flip()
