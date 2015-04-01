@@ -11,7 +11,7 @@ fenetre = pygame.display.set_mode((9197, 720))
 
 
 
-fond = pygame.image.load("SCROLL FINALE.png").convert()
+fond = pygame.image.load("SCROLL FINAL.png").convert()
 fenetre.blit(fond, (0,0))
 
 zombie = pygame.image.load("MRZBY FINAL.png").convert()
