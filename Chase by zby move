@@ -1,0 +1,64 @@
+import pygame
+from pygame.locals import *
+
+pygame.init()
+
+
+fenetre = pygame.display.set_mode((1600, 720))
+
+
+fond = pygame.image.load("SCROLL FINAL.png").convert()
+position_fond = fond.get_rect()
+
+zombie = pygame.image.load("MRZBY FINAL.png").convert()
+position_zombie = zombie.get_rect()
+
+
+leroux = pygame.image.load("LEROUX FINAL.png").convert()
+position_leroux = leroux.get_rect()
+
+zombieWin = pygame.image.load("ZOMBIEWIN.png").convert() #en attente
+
+lerouxWin = pygame.image.load("HUMANWIN.png").convert()  #en attente
+
+position_zombie = (500, 525)
+position_leroux = (600,525)
+
+x1, x2 = 500,600
+moveX1, moveX2 = 0,0
+
+
+pygame.display.flip()
+
+continuer = True
+while continuer:
+        for event in pygame.event.get():        #Attente des événements
+                if event.type == QUIT:
+                        continuer = False
+                
+                if event.type == KEYDOWN:
+                        #Si "flèche droite ": On bouge le zombie
+                        if event.key == K_f:
+                                moveX1 += 1
+                        if event.key == K_RIGHT:
+                                moveX2 += 1
+
+                if event.type == KEYUP:         # Si la touche est levée, les personnages ne bougent pas
+                        if event.key == K_f:
+                                moveX1 = 0
+                        if event.key == K_RIGHT:
+                                moveX2 = 0
+
+        x1 += moveX1
+        x2 += moveX2
+
+        position_zombie = (x1, 525)
+        position_leroux = (x2, 525)
+
+
+        #Re-collage
+        fenetre.blit(fond, position_fond)
+        fenetre.blit(leroux, position_leroux)
+        fenetre.blit(zombie, position_zombie)
+        #Rafraichissement
+        pygame.display.flip()
