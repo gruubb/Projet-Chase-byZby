@@ -1,0 +1,85 @@
+import pygame
+from pygame.locals import *
+
+pygame.init()
+
+#step_sound = pygame.mixer.Sound("step_sound.wav")
+soundtrack = pygame.mixer.Sound("texas.wav")
+zombie_sound = pygame.mixer.Sound("zombie_sound.wav")
+
+fenetre = pygame.display.set_mode((1450, 720))
+
+# Récupération des images
+fond = pygame.image.load("SCROLL FINAL.png").convert()
+position_fond = fond.get_rect()
+
+zombie = pygame.image.load("MRZBY FINAL.png").convert()
+position_zombie = zombie.get_rect()
+
+
+leroux = pygame.image.load("LEROUX FINAL.png").convert()
+position_leroux = leroux.get_rect()
+
+# Définition des positions de base
+position_zombie = (500, 525)
+position_leroux = (600,525)
+
+# Déclaration des variables qui seront modifiées
+x1, x2 = 500,600
+Xscroll = 0
+findugame = 0
+
+pygame.display.flip()
+
+continuer = True
+
+clock = pygame.time.Clock()
+
+while continuer:
+        for event in pygame.event.get():        #Attente des événements
+                if event.type == QUIT:
+                        continuer = False
+                
+                if event.type == KEYDOWN and findugame == 0:
+                        # Gestion de la bande sonore
+                        if event.key == K_p:
+                                zombie_sound.play()
+                                soundtrack.play()
+                        if event.key == K_o:
+                                zombie_sound.stop()
+                                soundtrack.stop()
+
+                        # Fin du jeu
+                        if position_fond == (-2660, 0, 9197, 720) :
+                                findugame+= 1
+                                position_fond = position_fond.move(-1850,0)     
+
+                        if position_zombie == position_leroux :
+                                findugame+= 1
+                                position_fond = position_fond.move(-5750, 0)
+
+                        #Si "flèche droite ": On bouge le zombie
+                        if event.key == K_f:
+                                x1 += 24
+                        if event.key == K_RIGHT:
+                                x2 += 24
+
+              #  if event.type == KEYUP:          Code permettant d'avoir des mouvements sans spamer (optionel pour l'instant
+              #          if event.key == K_f:
+              #                  moveX1 = 0
+              #          if event.key == K_RIGHT:
+              #                  moveX2 = 0
+
+        
+        x1 -= 4
+        x2 -= 4
+        Xscroll -= 4 # Défilement continue du fond
+        
+        #Re-collage
+        fenetre.blit(fond, (Xscroll,0))
+        fenetre.blit(leroux,(x2, 525))
+        fenetre.blit(zombie,(x1, 525))
+        #Rafraichissement
+        clock.tick(60)
+        
+        pygame.display.flip()
