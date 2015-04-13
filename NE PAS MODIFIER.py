@@ -3,6 +3,16 @@ from pygame.locals import *
 
 pygame.init()
 
+def refresh():
+    #Re-collage
+    fenetre.blit(fond, position_fond)
+    if findugame == 0 :
+            fenetre.blit(leroux, position_leroux)
+            fenetre.blit(zombie, position_zombie)
+        #Rafraichissement
+    pygame.display.flip()
+
+
 #step_sound = pygame.mixer.Sound("step_sound.wav")
 soundtrack = pygame.mixer.Sound("texas.wav")
 zombie_sound = pygame.mixer.Sound("zombie_sound.wav")
@@ -19,7 +29,7 @@ position_zombie = zombie.get_rect()
 leroux = pygame.image.load("LEROUX.png").convert_alpha()
 position_leroux = leroux.get_rect()
 
-
+d_parcourue = 0
 findugame = 0
 position_zombie = position_zombie.move(560,525)
 position_leroux = position_leroux.move(600,525)
@@ -44,27 +54,25 @@ while continuer:
 
                          if position_fond == (-2670, 0, 9197, 720) :
                                 findugame+= 1
-                                position_fond = position_fond.move(-1850,0)     
+                                position_fond = position_fond.move(-1850, 0)
+                                
+                               
 
                          if position_zombie == position_leroux :
                                 findugame+= 1
-                                position_fond = position_fond.move(-5750, 0)
-                            
+                                position_fond = position_fond.move(-5750 + d_parcourue, 0)
+
+                                
                         #Si "flèche droite ": On bouge le zombie et le fond
                          if event.key == K_f:
-                                 position_zombie = position_zombie.move(15,0)
+                                 position_zombie = position_zombie.move(10,0)
                      
                          if event.key == K_RIGHT:
-                                 position_zombie = position_zombie.move(-15, 0)
-                                 position_fond = position_fond.move(-15, 0)
+                                 position_zombie = position_zombie.move(-10, 0)
+                                 position_fond = position_fond.move(-10, 0)
                                  print(position_fond)
                                  print(position_leroux)
+                                 d_parcourue += 10
 
 
-        #Re-collage
-        fenetre.blit(fond, position_fond)
-        if findugame == 0 :
-                fenetre.blit(leroux, position_leroux)
-                fenetre.blit(zombie, position_zombie)
-        #Rafraichissement
-        pygame.display.flip()
+        refresh()
