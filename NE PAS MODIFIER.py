@@ -12,20 +12,16 @@ fenetre = pygame.display.set_mode((1450, 720))
 fond = pygame.image.load("SCROLL FINAL.png").convert()
 position_fond = fond.get_rect()
 
-zombie = pygame.image.load("MRZBY FINAL.png").convert_alpha()
+zombie = pygame.image.load("MRZBY.png").convert_alpha()
 position_zombie = zombie.get_rect()
 
 
-leroux = pygame.image.load("LEROUX FINAL.png").convert_alpha()
+leroux = pygame.image.load("LEROUX.png").convert_alpha()
 position_leroux = leroux.get_rect()
-
-zombieWin = pygame.image.load("ZOMBIEWIN.png").convert() #en attente
-
-lerouxWin = pygame.image.load("HUMANWIN.png").convert()  #en attente
 
 
 findugame = 0
-position_zombie = position_zombie.move(550,525)
+position_zombie = position_zombie.move(560,525)
 position_leroux = position_leroux.move(600,525)
 
 
@@ -46,7 +42,7 @@ while continuer:
                                  zombie_sound.stop()
                                  soundtrack.stop()
 
-                         if position_fond == (-2660, 0, 9197, 720) :
+                         if position_fond == (-2670, 0, 9197, 720) :
                                 findugame+= 1
                                 position_fond = position_fond.move(-1850,0)     
 
@@ -56,11 +52,11 @@ while continuer:
                             
                         #Si "flèche droite ": On bouge le zombie et le fond
                          if event.key == K_f:
-                                 position_zombie = position_zombie.move(10,0)
+                                 position_zombie = position_zombie.move(15,0)
                      
                          if event.key == K_RIGHT:
-                                 position_zombie = position_zombie.move(-10,0)
-                                 position_fond = position_fond.move(-10,0)
+                                 position_zombie = position_zombie.move(-15, 0)
+                                 position_fond = position_fond.move(-15, 0)
                                  print(position_fond)
                                  print(position_leroux)
 
