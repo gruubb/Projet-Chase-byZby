@@ -3,6 +3,31 @@ from pygame.locals import *
 
 pygame.init()
 
+
+def menu():
+        fenetre = pygame.display.set_mode((800, 600))
+        fond_menu = pygame.image.load("Menu.png")
+        fenetre.blit(fond_menu, (0, 0))
+        pygame.display.flip()
+        son_menu = pygame.mixer.Sound("intro.wav")
+
+        continuer = 1
+        while continuer:
+                for event in pygame.event.get():        #Attente des événements
+                        if event.type == QUIT :
+                                continuer = 0
+
+                        if event.type == KEYDOWN:
+                                if event.key == K_p:
+                                        son_menu.play()
+                                if event.key == K_o:
+                                        son_menu.stop()
+
+                        if event.type == MOUSEBUTTONUP and event.button == 1 and event.pos[0] > 264 and event.pos[0] < 511 and event.pos[1] > 332 and event.pos[1] < 446:
+                                son_menu.stop()
+                                main()
+                        
+        
 def refresh(fenetre, fond, position_fond, zombie, position_zombie, leroux,  position_leroux, findugame):
         #Re-collage
         fenetre.blit(fond, position_fond)
@@ -14,9 +39,11 @@ def refresh(fenetre, fond, position_fond, zombie, position_zombie, leroux,  posi
         
 
 def main():
-        #step_sound = pygame.mixer.Sound("step_sound.wav")
         soundtrack = pygame.mixer.Sound("texas.wav")
         zombie_sound = pygame.mixer.Sound("zombie_sound.wav")
+        #zombiewin_sound = pygame.mixer.Sound("zombiewin.wav")
+        #humanwin_sound = pygame.mixer.Sound(".wav")
+        
         fenetre = pygame.display.set_mode((1450, 720))
 
 
@@ -47,32 +74,47 @@ def main():
 
                         if event.type == KEYDOWN and findugame == 0 :
 
+                                # Musiques de fond
                                  if event.key == K_p:
                                          zombie_sound.play()
                                          soundtrack.play()
                                  if event.key == K_o:
                                          zombie_sound.stop()
                                          soundtrack.stop()
-
-                                 if position_fond == (-2660, 0, 9197, 720) :
-                                        findugame+= 1
-                                        position_fond = position_fond.move(-1850,0)     
-
-                                 if position_zombie == position_leroux :
-                                        findugame+= 1
-                                        position_fond = position_fond.move(-5800 + d_parcourue, 0)
-                            
                                 #Si "flèche droite ": On bouge le zombie et le fond
+
                                  if event.key == K_f:
-                                                 position_zombie = position_zombie.move(10,0)
-                     
+                                                 position_zombie = position_zombie.move(20,0)
+
                                  if event.key == K_RIGHT:
                                                  position_zombie = position_zombie.move(-10,0)
                                                  position_fond = position_fond.move(-10,0)
                                                  d_parcourue += 10
-                                                 print(position_fond)
-                                                 print(position_leroux)
+                                                 #print(position_fond)
+                                                 #print(position_leroux)
+
+                                # Gestion de Fin
+                                 if position_fond == (-2660, 0, 9197, 720) :
+                                        findugame+= 1
+                                        position_fond = position_fond.move(-1850,0)
+                                        zombie_sound.stop()
+                                        soundtrack.stop()
+                                        #humanwin_sound.play()
+
+
+                                 if position_zombie == position_leroux  :
+                                        findugame+= 1
+                                        position_fond = position_fond.move(-5800 + d_parcourue, 0)
+                                        zombie_sound.stop()
+                                        soundtrack.stop()
+                                        #zombiewin_sound.play()
+
+
+                                 if event.key == K_f:
+                                                 position_zombie = position_zombie.move(-10,0)
+                                
                 refresh(fenetre, fond, position_fond, zombie, position_zombie, leroux,  position_leroux, findugame)
 
-main()
+menu()
+
 
