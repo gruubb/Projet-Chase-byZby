@@ -29,15 +29,23 @@ def menu():
                         
         
         
-def refresh(fenetre, fond, position_fond, zombie, zombie2, position_zombie, leroux,  position_leroux, anim, findugame):
+def refresh(fenetre, fond, position_fond, zombie, zombie2, position_zombie, leroux, leroux2, position_leroux, animzby, animroux, findugame):
         #Re-collage
         fenetre.blit(fond, position_fond)
         if findugame == 0 :
-                fenetre.blit(leroux, position_leroux)
-                if anim % 2 == 0 :
+
+                if animroux % 2 == 0 :
+                    fenetre.blit(leroux, position_leroux)
+                else :
+                    fenetre.blit(leroux2, position_leroux)
+
+
+                if animzby % 2 == 0 :
                     fenetre.blit(zombie, position_zombie)
                 else :
                     fenetre.blit(zombie2, position_zombie)
+
+
         #Rafraichissement
         pygame.display.flip()
         
@@ -45,8 +53,6 @@ def refresh(fenetre, fond, position_fond, zombie, zombie2, position_zombie, lero
 def main():
         soundtrack = pygame.mixer.Sound("texas.wav")
         zombie_sound = pygame.mixer.Sound("zombie_sound.wav")
-        #zombiewin_sound = pygame.mixer.Sound("zombiewin.wav")
-        #humanwin_sound = pygame.mixer.Sound(".wav")
         
         fenetre = pygame.display.set_mode((1450, 720))
 
@@ -62,13 +68,15 @@ def main():
 
         leroux = pygame.image.load("LEROUX.png").convert_alpha()
         position_leroux = leroux.get_rect()
+        leroux2 = pygame.image.load("LEROUX2.png").convert_alpha()
 
 
         findugame = 0
         position_zombie = position_zombie.move(550,525)
         position_leroux = position_leroux.move(600,525)
         d_parcourue = 0
-        anim = 0
+        animzby = 0
+        animroux = 0
 
 
         pygame.display.flip()
@@ -92,14 +100,14 @@ def main():
 
                                  if event.key == K_f:
                                                  position_zombie = position_zombie.move(30,0)
-                                                 anim += 1
+                                                 animzby += 1
 
                                  if event.key == K_RIGHT:
                                                  position_zombie = position_zombie.move(-20,0)
                                                  position_fond = position_fond.move(-20,0)
                                                  d_parcourue += 20
-                                                 #print(position_fond)
-                                                 #print(position_leroux)
+                                                 animroux += 1
+                 
 
                                 # Gestion de Fin
                                  if position_fond == (-2660, 0, 9197, 720) :
@@ -107,7 +115,7 @@ def main():
                                         position_fond = position_fond.move(-1850,0)
                                         zombie_sound.stop()
                                         soundtrack.stop()
-                                        #humanwin_sound.play()
+
 
 
                                  if position_zombie == position_leroux  :
@@ -115,13 +123,13 @@ def main():
                                         position_fond = position_fond.move(-5800 + d_parcourue, 0)
                                         zombie_sound.stop()
                                         soundtrack.stop()
-                                        #zombiewin_sound.play()
+ 
 
 
                                  if event.key == K_f:
                                                  position_zombie = position_zombie.move(-10,0)
                                 
-                refresh(fenetre, fond, position_fond, zombie, zombie2, position_zombie, leroux,  position_leroux, anim, findugame)
+                refresh(fenetre, fond, position_fond, zombie, zombie2, position_zombie, leroux, leroux2, position_leroux, animzby, animroux, findugame)
 
 menu()
 
