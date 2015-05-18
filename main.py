@@ -19,7 +19,8 @@ def menu():
         while continuer:
                 for event in pygame.event.get():                #Attente des événements
                         if event.type == QUIT :                 #fermeture en mettant fin a la boucle
-                                continuer = 0           
+                                continuer = 0
+                                pygame.quit()
 
                         if event.type == KEYDOWN:               #gestion du son
                                 if event.key == K_p:
