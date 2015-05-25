@@ -1,3 +1,1 @@
-final :
-lien mega :
-https://mega.co.nz/#!JNJUXAga!NTowLP-vihIFI9_ACd1QdIkrlZEgVDEhbQDUXjaMf5A
+compte rendu envoyer sous le format Odt par mail
